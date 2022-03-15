@@ -2,10 +2,14 @@ package com.example.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -18,6 +22,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "myLogs";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         EditText text = findViewById(R.id.value);
         EditText base = findViewById(R.id.base);
         ToggleButton toggleButton = findViewById(R.id.toggleButton);
+        ImageButton imageButton = findViewById(R.id.info);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -170,5 +176,37 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("android.intent.action.Information");
+                //intent.setAction("android.intent.action.Information");
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    Log.d(TAG, "Не получается обработать намерение!");
+                }
+            }
+        });
+        imageButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Кнопку надо отпускать :)", Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.Information");
+                startActivity(intent);
+                return false;
+            }
+        });
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "MainActivity: onStart");
     }
 }
