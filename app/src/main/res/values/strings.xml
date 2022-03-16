@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Calculator</string>
+
+<!--    Activity Information    -->
+    <string name="info_hint">Информация</string>
+    <string name="info_me">
+        <p>Автор: <b><font color="black">Юсупов Ойбек</font></b></p>
+    </string>
+<!--  End  -->
+    <string name="my_github">https://github.com/Oybek22</string>
 </resources>
