@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         EditText text = (EditText) findViewById(R.id.value);
         EditText base = (EditText) findViewById(R.id.base);
         ToggleButton toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
-//        ImageButton imageButton = findViewById(R.id.info);
         toolbar_calc = (Toolbar) findViewById(R.id.toolbar_calc);
         setSupportActionBar(toolbar_calc);
         getSupportActionBar().setTitle("Калькулятор");
@@ -187,32 +186,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-//        imageButton.setOnClickListener(new View.OnClickListener() {     Удалить!!!
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent("android.intent.action.Information");
-//                //intent.setAction("android.intent.action.Information");
-//                if (intent.resolveActivity(getPackageManager()) != null) {
-//                    startActivity(intent);
-//                } else {
-//                    Log.d(TAG, "Не получается обработать намерение!");
-//                }
-//            }
-//        });
-//        imageButton.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {
-//                Toast toast = Toast.makeText(getApplicationContext(), "Кнопку надо отпускать :)", Toast.LENGTH_SHORT);
-//                toast.show();
-//                Intent intent = new Intent();
-//                intent.setAction("android.intent.action.Information");
-//                startActivity(intent);
-//                return false;
-//            }
-//        });
-
-
     }
 
     @Override
@@ -241,4 +214,3 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "MainActivity: onStart");
     }
 }
-// toolbar.setSubtitle("Test Subtitle");
