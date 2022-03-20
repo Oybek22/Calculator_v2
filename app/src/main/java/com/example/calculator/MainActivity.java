@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "myLogs";
     private Toolbar toolbar_calc;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
