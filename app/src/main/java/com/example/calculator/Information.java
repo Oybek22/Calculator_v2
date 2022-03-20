@@ -75,4 +75,10 @@ public class Information extends AppCompatActivity {
         super.onStart();
         Log.d(TAG, "Information: onStart");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "MainActivity: OnDestroy");
+    }
 }
