@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "myLogs";
     private Toolbar toolbar_calc;
+    private Integer global_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,123 +49,9 @@ public class MainActivity extends AppCompatActivity {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup arg0, int id) {
+                global_id = id;
 
-                String str;
-
-                switch (id) {
-                    case R.id.sin:
-                        try {
-                            toggleButton.setEnabled(true);
-                            Float value = Float.parseFloat(text.getText().toString());
-
-                            if (toggleButton.isChecked()) {
-                                str = Double.toString(Math.sin(value));
-                                res.setText(str);
-                            } else {
-                                str = Double.toString(Math.toDegrees(Math.sin(value)));
-                                res.setText(str);
-                            }
-                        } catch (Exception e) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
-                            toast.show();
-                            res.setText("");
-                        }
-                        break;
-                    case R.id.cos:
-                        try {
-                            toggleButton.setEnabled(true);
-                            Float value = Float.parseFloat(text.getText().toString());
-
-                            if (toggleButton.isChecked()) {
-                                str = Double.toString(Math.cos(value));
-                                res.setText(str);
-                            } else {
-                                str = Double.toString(Math.toDegrees(Math.cos(value)));
-                                res.setText(str);
-                            }
-                        } catch (Exception e) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
-                            toast.show();
-                            res.setText("");
-                        }
-                        break;
-                    case R.id.tg:
-                        try {
-                            toggleButton.setEnabled(true);
-                            Float value = Float.parseFloat(text.getText().toString());
-
-                            if (toggleButton.isChecked()) {
-                                str = Double.toString(Math.tan(value));
-                                res.setText(str);
-                            } else {
-                                str = Double.toString(Math.toDegrees(Math.tan(value)));
-                                res.setText(str);
-                            }
-                        } catch (Exception e) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
-                            toast.show();
-                            res.setText("");
-                        }
-                        break;
-                    case R.id.ctg:
-                        try {
-                            toggleButton.setEnabled(true);
-                            Float value = Float.parseFloat(text.getText().toString());
-
-                            if (toggleButton.isChecked()) {
-                                str = Double.toString(1.0 / Math.tan(value));
-                                res.setText(str);
-                            } else {
-                                str = Double.toString(Math.toDegrees(1.0 / Math.tan(value)));
-                                res.setText(str);
-                            }
-                        } catch (Exception e) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
-                            toast.show();
-                            res.setText("");
-                        }
-                        break;
-                    case R.id.ln:
-                        try {
-                            toggleButton.setEnabled(false);
-                            Float value = Float.parseFloat(text.getText().toString());
-
-                            str = Double.toString(Math.log(value));
-                            res.setText(str);
-                        } catch (Exception e) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
-                            toast.show();
-                            res.setText("");
-                        }
-                        break;
-                    case R.id.lg:
-                        try {
-                            toggleButton.setEnabled(false);
-                            Float value = Float.parseFloat(text.getText().toString());
-
-                            str = Double.toString(Math.log10(value));
-                            res.setText(str);
-                        } catch (Exception e) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
-                            toast.show();
-                            res.setText("");
-                        }
-                        break;
-                    case R.id.log:
-                        try {
-                            toggleButton.setEnabled(false);
-                            Float basevalue = Float.parseFloat(base.getText().toString());
-                            Float value = Float.parseFloat(text.getText().toString());
-
-                            str = Double.toString(Math.log(value) / Math.log(basevalue)); //log
-                            res.setText(str);
-                        } catch (RuntimeException e) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
-                            toast.show();
-                            res.setText("");
-                        }
-                        break;
-                }
+                CheckFunc(id);
             }
         });
 
@@ -172,13 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    if (toggleButton.isChecked()) {
-                        Double aDouble = Math.toRadians(Double.parseDouble(res.getText().toString()));
-                        res.setText(Double.toString(aDouble));
-                    } else {
-                        Double aDouble = Math.toDegrees(Double.parseDouble(res.getText().toString()));
-                        res.setText(Double.toString(aDouble));
-                    }
+                    CheckFunc(global_id);
                 } catch (Exception e) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Ошибка, попробуйте еще раз", Toast.LENGTH_SHORT);
                     toast.show();
@@ -218,5 +99,129 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "MainActivity: OnDestroy");
+    }
+
+    private void CheckFunc(Integer id) {
+        TextView res = (TextView) findViewById(R.id.res);
+        EditText text = (EditText) findViewById(R.id.value);
+        EditText base = (EditText) findViewById(R.id.base);
+        ToggleButton toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
+
+        String str;
+
+        switch (id) {
+            case R.id.sin:
+                try {
+                    toggleButton.setEnabled(true);
+                    Double value = Double.parseDouble(text.getText().toString());
+
+                    if (toggleButton.isChecked()) {
+                        str = Double.toString(Math.sin((value)));
+                        res.setText(str);
+                    } else {
+                        str = Double.toString((Math.sin(Math.toRadians(value))));
+                        res.setText(str);
+                    }
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
+                    toast.show();
+                    res.setText("");
+                }
+                break;
+            case R.id.cos:
+                try {
+                    toggleButton.setEnabled(true);
+                    Double value = Double.parseDouble(text.getText().toString());
+
+                    if (toggleButton.isChecked()) {
+                        str = Double.toString((Math.cos((value))));
+                        res.setText(str);
+                    } else {
+                        str = Double.toString((Math.cos(value)));
+                        res.setText(str);
+                    }
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
+                    toast.show();
+                    res.setText("");
+                }
+                break;
+            case R.id.tg:
+                try {
+                    toggleButton.setEnabled(true);
+                    Double value = Double.parseDouble(text.getText().toString());
+
+                    if (toggleButton.isChecked()) {
+                        str = Double.toString((Math.tan((value))));
+                        res.setText(str);
+                    } else {
+                        str = Double.toString((Math.tan(Math.toRadians(value))));
+                        res.setText(str);
+                    }
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
+                    toast.show();
+                    res.setText("");
+                }
+                break;
+            case R.id.ctg:
+                try {
+                    toggleButton.setEnabled(true);
+                    Double value = Double.parseDouble(text.getText().toString());
+
+                    if (toggleButton.isChecked()) {
+                        str = Double.toString(((1.0 / Math.tan(value))));
+                        res.setText(str);
+                    } else {
+                        str = Double.toString((Math.tan(1.0 / Math.tan(Math.toRadians(value)))));
+                        res.setText(str);
+                    }
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
+                    toast.show();
+                    res.setText("");
+                }
+                break;
+            case R.id.ln:
+                try {
+                    toggleButton.setEnabled(false);
+                    Double value = Double.parseDouble(text.getText().toString());
+
+                    str = Double.toString(Math.log(value));
+                    res.setText(str);
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
+                    toast.show();
+                    res.setText("");
+                }
+                break;
+            case R.id.lg:
+                try {
+                    toggleButton.setEnabled(false);
+                    Double value = Double.parseDouble(text.getText().toString());
+
+                    str = Double.toString(Math.log10(value));
+                    res.setText(str);
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
+                    toast.show();
+                    res.setText("");
+                }
+                break;
+            case R.id.log:
+                try {
+                    toggleButton.setEnabled(false);
+                    Double basevalue = Double.parseDouble(base.getText().toString());
+                    Double value = Double.parseDouble(text.getText().toString());
+
+                    str = Double.toString(Math.log(value) / Math.log(basevalue)); //log
+                    res.setText(str);
+                } catch (RuntimeException e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Введите корректное значение", Toast.LENGTH_SHORT);
+                    toast.show();
+                    res.setText("");
+                }
+                break;
+        }
     }
 }
