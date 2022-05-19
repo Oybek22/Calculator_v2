@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                         str = Double.toString((Math.cos((value))));
                         res.setText(str);
                     } else {
-                        str = Double.toString((Math.cos(value)));
+                        str = Double.toString((Math.cos(Math.toRadians(value))));
                         res.setText(str);
                     }
                 } catch (Exception e) {
